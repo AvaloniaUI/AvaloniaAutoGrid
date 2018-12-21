@@ -1,0 +1,223 @@
+﻿<Window xmlns="https://github.com/avaloniaui" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:AvaloniaAutoGrid;assembly=AvaloniaAutoGrid"
+        xmlns:system="clr-namespace:System;assembly=System.Runtime"
+        Title="MainWindow"
+        Height="350"
+        Width="525">
+    
+    <ScrollViewer>
+
+        <UniformGrid>
+
+            <!-- Grid of 4 colors -->
+            <local:AutoGrid ColumnCount="2"
+                            ColumnWidth="*"
+                            RowDefinitions="*,*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Yellow" />
+
+            </local:AutoGrid>
+
+            <!-- Colspan Tests (default Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue"
+                           Grid.ColumnSpan="2" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow" />
+                <Rectangle Fill="Green"
+                           Grid.ColumnSpan="2" />
+
+            </local:AutoGrid>
+
+            <!-- Colspan + Rowspan Tests (default Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow" />
+                <Rectangle Fill="Green"
+                           Grid.ColumnSpan="2" />
+
+            </local:AutoGrid>
+
+            <!-- Rowspan Tests, second child (default Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue" />
+                <Rectangle Fill="Red"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Yellow" />
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Orange" />
+
+            </local:AutoGrid>
+
+            <!-- Rowspan Tests, third child (default Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Orange" />
+
+            </local:AutoGrid>
+
+            <!-- Rowspan Tests, sufu (default Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Green" />
+
+            </local:AutoGrid>
+
+            <!-- Rowspan Tests, first column (default Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue" Grid.RowSpan="2" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow" />
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Orange" />
+
+            </local:AutoGrid>
+
+
+            <!-- Colspan Tests, rowspan tests (Vertical Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="2"
+                            Orientation="Vertical"
+                            Margin="5">
+
+                <Rectangle Fill="Blue"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow"
+                           Grid.RowSpan="2" />
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Orange" />
+
+            </local:AutoGrid>
+
+            <!-- Colspan Tests, colspan tests (Vertical Orientation) -->
+            <local:AutoGrid ColumnCount="3"
+                            ColumnWidth="*"
+                            RowCount="2"
+                            RowHeight="*"
+                            ChildMargin="7"
+                            Orientation="Vertical"
+                            Margin="5">
+
+                <Rectangle Fill="Blue"
+                           Grid.ColumnSpan="2" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Yellow"
+                           Grid.RowSpan="2"
+                           Margin="7"/>
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Orange" />
+
+            </local:AutoGrid>
+
+            <!-- Binding Test -->
+            <local:AutoGrid RowDefinitions="Auto,*"
+                            ColumnDefinitions="*"
+                            ChildMargin="5">
+                <NumericUpDown Name="uxCombo" Value="2" Maximum="4" Minimum="1">
+                    
+                </NumericUpDown>
+                <local:AutoGrid ColumnCount="{Binding ElementName=uxCombo, Path=Value}"
+                            ColumnWidth="*"
+                            RowHeight="*"
+                            RowCount="4"
+                            ChildMargin="1">
+
+                    <Rectangle Fill="Blue" />
+                    <Rectangle Fill="Red" />
+                    <Rectangle Fill="Green" />
+                    <Rectangle Fill="Yellow" />
+
+                </local:AutoGrid>
+            </local:AutoGrid>
+
+            <!-- Testing collapsed child row -->
+            <local:AutoGrid ColumnCount="2"
+                            ColumnWidth="*"
+                            RowDefinitions="*,*,*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Green" IsVisible="False" />
+                <Rectangle Fill="Yellow" IsVisible="False" />
+                <Rectangle Fill="Purple" />
+                <Rectangle Fill="Pink" />
+
+            </local:AutoGrid>
+
+            <!-- Testing single collapsed child element -->
+            <local:AutoGrid ColumnCount="2"
+                            ColumnWidth="*"
+                            RowDefinitions="*,*,*"
+                            ChildMargin="2"
+                            Margin="5">
+
+                <Rectangle Fill="Blue" />
+                <Rectangle Fill="Red" />
+                <Rectangle Fill="Green" />
+                <Rectangle Fill="Yellow" IsVisible="False" />
+                <Rectangle Fill="Purple" />
+                <Rectangle Fill="Pink" />
+
+            </local:AutoGrid>
+
+        </UniformGrid>
+    </ScrollViewer>
+</Window>
