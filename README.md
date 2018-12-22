@@ -11,7 +11,7 @@ Partially based on work at http://rachel53461.wordpress.com/2011/09/17/wpf-grids
 
 #### Standard WPF Grid
 
-```
+```xml
 <Grid>
   <Grid.RowDefinitions>
     <RowDefinition Height="35" />
@@ -22,16 +22,16 @@ Partially based on work at http://rachel53461.wordpress.com/2011/09/17/wpf-grids
     <ColumnDefinition Width="auto" />
   </Grid.ColumnDefinitions>
   
-  <Label Grid.Row="0" Grid.Column="0"/>
-  <TextBox Grid.Row="0" Grid.Column="1"/>
-  <Label Grid.Row="1" Grid.Column="0"/>
-  <TextBox Grid.Row="1" Grid.Column="1"/>
+  <Label Grid.Row="0" Grid.Column="0" />
+  <TextBox Grid.Row="0" Grid.Column="1" />
+  <Label Grid.Row="1" Grid.Column="0" />
+  <TextBox Grid.Row="1" Grid.Column="1" />
 </Grid>
 ```
 
 #### AutoGrid (Same output as above)
 
-```
+```xml
 <AutoGrid RowCount="2" RowHeight="35" Columns="100,auto">
   <Label />
   <TextBox />
@@ -48,13 +48,13 @@ Explicit assignment of columns and rows still works too. This allows you to upgr
 
 #### Defining a even spaced 6x6 grid with a default margin of 10 for all cells
 
-```
+```xml
 <local:AutoGrid ColumnCount="6" ColumnWidth="*" RowHeight="*" RowCount="6" ChildMargin="10" />
 ```
 
 #### Grid with relative based column widths and fixed row height
 
-```
+```xml
 <local:AutoGrid Columns="2*,5*" RowCount="6" RowHeight="25" />
 ```
 
@@ -62,7 +62,7 @@ Explicit assignment of columns and rows still works too. This allows you to upgr
 
 In this example, labels will fall in the first column, and textboxes will be in the second column
 
-```
+```xml
 <AutoGrid RowCount="2" RowHeight="35" Columns="100,auto">
   <Label />     <!-- Col=0, Row=0 -->
   <TextBox />   <!-- Col=1, Row=0 -->
@@ -75,7 +75,7 @@ In this example, labels will fall in the first column, and textboxes will be in 
 
 In this example, labels will fall in the first row, and textboxes will be in the second row
 
-```
+```xml
 <AutoGrid RowCount="2" RowHeight="35" Columns="100,auto" Orientation="Vertical">
   <Label />     <!-- Col=0, Row=0 -->
   <TextBox />   <!-- Col=0, Row=1 -->
@@ -88,7 +88,7 @@ In this example, labels will fall in the first row, and textboxes will be in the
 
 Collapsed elements will be removed from the flow, hidden elements will still occupy space in the grid
 
-```
+```xml
 <AutoGrid RowCount="2" RowHeight="35" Columns="100,auto">
   <Label />                             <!-- Col=0, Row=0 -->
   <TextBox />                           <!-- Col=1, Row=0 -->
