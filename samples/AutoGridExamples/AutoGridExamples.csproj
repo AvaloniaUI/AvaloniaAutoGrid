@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AutoGrid\AvaloniaAutoGrid.csproj" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.7.1-build1036-beta" />
-    <EmbeddedResource Include="**\*.xaml"/>
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0004171-beta" />
+    <EmbeddedResource Include="**\*.xaml" />
   </ItemGroup>
 
 </Project>

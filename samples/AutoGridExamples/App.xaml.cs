@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Avalonia;
-using Avalonia.Gtk3;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
 namespace AutoGridExamples
@@ -18,15 +18,14 @@ namespace AutoGridExamples
             AvaloniaXamlLoader.Load(this);
         }
 
-        static void Main(string[] args)
+        public override void OnFrameworkInitializationCompleted()
         {
-            BuildAvaloniaApp().Start<MainWindow>();
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+                desktop.MainWindow = new MainWindow();
+            else if (ApplicationLifetime is ISingleViewApplicationLifetime singleView)
+                throw new NotImplementedException();
+            base.OnFrameworkInitializationCompleted();
         }
-
-        static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
-            .UsePlatformDetect().UseGtk3(new Gtk3PlatformOptions { UseGpuAcceleration = true });
-
-
     }
 
 }
