@@ -114,18 +114,15 @@ namespace AvaloniaAutoGrid
             get => (GridLength)GetValue(RowHeightProperty);
             set => SetValue(RowHeightProperty, value);
         }
-        
+
         /// <summary>
         /// Handles the column count changed event
         /// </summary>
-        public static void ColumnCountChanged(AvaloniaPropertyChangedEventArgs e)
+        public static void ColumnCountChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
             if ((int)e.NewValue < 0)
                 return;
 
-            var grid = (AutoGrid)e.Sender;
-
-            
             // look for an existing column definition for the height
             var width = grid.ColumnWidth;
             if (!grid.IsSet(ColumnWidthProperty) && grid.ColumnDefinitions.Count > 0)
@@ -141,10 +138,8 @@ namespace AvaloniaAutoGrid
         /// <summary>
         /// Handle the fixed column width changed event
         /// </summary>
-        public static void FixedColumnWidthChanged(AvaloniaPropertyChangedEventArgs e)
+        public static void FixedColumnWidthChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
-            var grid = (AutoGrid)e.Sender;
-
             // add a default column if missing
             if (grid.ColumnDefinitions.Count == 0)
                 grid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -157,10 +152,8 @@ namespace AvaloniaAutoGrid
         /// <summary>
         /// Handle the fixed row height changed event
         /// </summary>
-        public static void FixedRowHeightChanged(AvaloniaPropertyChangedEventArgs e)
+        public static void FixedRowHeightChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
-            var grid = (AutoGrid)e.Sender;
-
             // add a default row if missing
             if (grid.RowDefinitions.Count == 0)
                 grid.RowDefinitions.Add(new RowDefinition());
@@ -173,12 +166,10 @@ namespace AvaloniaAutoGrid
         /// <summary>
         /// Handles the row count changed event
         /// </summary>
-        public static void RowCountChanged(AvaloniaPropertyChangedEventArgs e)
+        public static void RowCountChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
             if ((int)e.NewValue < 0)
                 return;
-
-            var grid = (AutoGrid)e.Sender;
 
             // look for an existing row to get the height
             var height = grid.RowHeight;
@@ -195,9 +186,8 @@ namespace AvaloniaAutoGrid
         /// <summary>
         /// Called when [child horizontal alignment changed].
         /// </summary>
-        private static void OnChildHorizontalAlignmentChanged(AvaloniaPropertyChangedEventArgs e)
+        private static void OnChildHorizontalAlignmentChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
-            var grid = (AutoGrid)e.Sender;
             foreach (var child in grid.Children)
             {
                 child.SetValue(HorizontalAlignmentProperty,
@@ -208,9 +198,8 @@ namespace AvaloniaAutoGrid
         /// <summary>
         /// Called when [child layout changed].
         /// </summary>
-        private static void OnChildMarginChanged(AvaloniaPropertyChangedEventArgs e)
+        private static void OnChildMarginChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
-            var grid = (AutoGrid)e.Sender;
             foreach (var child in grid.Children)
             {
                 child.SetValue(MarginProperty, grid.ChildMargin ?? AvaloniaProperty.UnsetValue);
@@ -220,9 +209,8 @@ namespace AvaloniaAutoGrid
         /// <summary>
         /// Called when [child vertical alignment changed].
         /// </summary>
-        private static void OnChildVerticalAlignmentChanged(AvaloniaPropertyChangedEventArgs e)
+        private static void OnChildVerticalAlignmentChanged(AutoGrid grid, AvaloniaPropertyChangedEventArgs e)
         {
-            var grid = (AutoGrid)e.Sender;
             foreach (var child in grid.Children)
             {
                 child.SetValue(VerticalAlignmentProperty, grid.ChildVerticalAlignment ?? AvaloniaProperty.UnsetValue);
@@ -355,14 +343,15 @@ namespace AvaloniaAutoGrid
             AffectsMeasure<AutoGrid>(ChildHorizontalAlignmentProperty, ChildMarginProperty,
                 ChildVerticalAlignmentProperty, ColumnCountProperty, ColumnWidthProperty, IsAutoIndexingProperty, OrientationProperty,
                 RowHeightProperty);
-            
-            ChildHorizontalAlignmentProperty.Changed.Subscribe(OnChildHorizontalAlignmentChanged);
-            ChildMarginProperty.Changed.Subscribe(OnChildMarginChanged);
-            ChildVerticalAlignmentProperty.Changed.Subscribe(OnChildVerticalAlignmentChanged);
-            ColumnCountProperty.Changed.Subscribe(ColumnCountChanged);
-            RowCountProperty.Changed.Subscribe(RowCountChanged);
-            ColumnWidthProperty.Changed.Subscribe(FixedColumnWidthChanged);
-            RowHeightProperty.Changed.Subscribe(FixedRowHeightChanged);
+
+            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<AutoGrid>(OnChildHorizontalAlignmentChanged);
+            ChildHorizontalAlignmentProperty.Changed.AddClassHandler<AutoGrid>(OnChildHorizontalAlignmentChanged);
+            ChildMarginProperty.Changed.AddClassHandler<AutoGrid>(OnChildMarginChanged);
+            ChildVerticalAlignmentProperty.Changed.AddClassHandler<AutoGrid>(OnChildVerticalAlignmentChanged);
+            ColumnCountProperty.Changed.AddClassHandler<AutoGrid>(ColumnCountChanged);
+            RowCountProperty.Changed.AddClassHandler<AutoGrid>(RowCountChanged);
+            ColumnWidthProperty.Changed.AddClassHandler<AutoGrid>(FixedColumnWidthChanged);
+            RowHeightProperty.Changed.AddClassHandler<AutoGrid>(FixedRowHeightChanged);
         }
         #region Overrides
 
@@ -378,7 +367,8 @@ namespace AvaloniaAutoGrid
             PerformLayout();
             return base.MeasureOverride(constraint);
         }
-        
+
         #endregion Overrides
     }
+
 }
